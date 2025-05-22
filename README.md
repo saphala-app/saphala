@@ -1,3 +1,5 @@
+# Saphala
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
@@ -16,9 +18,76 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## API Documentation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Authentication Endpoints
+
+#### Sign Up
+
+- **URL**: `/api/signup`
+- **Method**: `POST`
+- **Body**:
+  ```json
+  {
+    "email": "user@example.com",
+    "password": "yourpassword",
+    "user_name": "username",
+    "full_name": "Full Name"
+  }
+  ```
+- **Success Response**:
+  - **Code**: 200
+  - **Content**:
+    ```json
+    {
+      "data": {user object},
+      "message": "Account created!"
+    }
+    ```
+- **Error Responses**:
+  - **Code**: 400 - Invalid data
+  - **Code**: 401 - User already exists
+  - **Code**: 500 - Server error
+
+#### Sign In
+
+- **URL**: `/api/signin`
+- **Method**: `POST`
+- **Body**:
+  ```json
+  {
+    "email": "user@example.com",
+    "password": "yourpassword"
+  }
+  ```
+- **Success Response**:
+  - **Code**: 200
+  - **Content**:
+    ```json
+    {
+      "data": {
+        "_id": "user_id",
+        "username": "username",
+        "avatar": "avatar_url"
+      },
+      "message": "Logged in successfully!"
+    }
+    ```
+- **Error Responses**:
+  - **Code**: 400 - Invalid data
+  - **Code**: 401 - Authentication failed
+  - **Code**: 500 - Server error
+
+## Technologies Used
+
+- Next.js
+- TypeScript
+- MongoDB
+- NextAuth.js for authentication
+
+## Contributing
+
+Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
 
 ## Learn More
 
