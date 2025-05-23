@@ -1,12 +1,12 @@
-export class ApiError extends Error {
+export class ApiError<T = string> extends Error {
     success: boolean;
     statusCode: number;
     data: null;
     message: string;
     stack?: string | undefined;
-    errors: any;
+    errors?: T;
     
-    constructor(statusCode = 200, message = "Something went wrong", errors: any = [], stack = "") {
+    constructor(statusCode = 200, message = "Something went wrong", errors?: T, stack = "") {
         super(message)
         this.success = false;
         this.statusCode = statusCode;
