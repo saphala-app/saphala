@@ -5,36 +5,35 @@ import { findOrCreate, generateRandomPassword, loggedUser } from './lib/helper';
 import { SignInType } from './types';
 
 export const authConfig = {
-  
   trustHost: true,
-  
+
   pages: {
     signIn: '/signin',
   },
   callbacks: {
     async signIn({ account, profile }) {
-      if (account?.provider === "google" && profile) {
-
+      if (account?.provider === 'google' && profile) {
         const email = profile?.email;
+        console.log(profile.name);
 
         if (!email) throw new Error('Google account email is required');
 
         try {
           const user_name = email.split('@')[0] || `user_${Date.now()}`;
-          
+
           const credentials = {
             user_name,
             email,
-            fullName: profile.name,
+            fullName: profile.name || undefined,
             provider: account.provider,
-            password: generateRandomPassword(10)
-          }
+            password: generateRandomPassword(10),
+          };
 
           await findOrCreate(credentials);
 
           return true;
         } catch (error: unknown) {
-          console.error("Error during sign-in:", error);
+          console.error('Error during sign-in:', error);
           return false;
         }
       }
@@ -45,7 +44,6 @@ export const authConfig = {
       const isLoggedIn = !!auth?.user;
 
       console.log(isLoggedIn);
-      
 
       const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
       if (isOnDashboard) {
@@ -64,30 +62,28 @@ export const authConfig = {
     }),
     Credentials({
       credentials: {
-        username: { type: "text", },
-        email: { type: "email" },
-        password: { type: "password" },
+        username: { type: 'text' },
+        email: { type: 'email' },
+        password: { type: 'password' },
       },
 
       authorize({ email, password }) {
-
         const credentials = {
           email,
           password,
-        } as SignInType
+        } as SignInType;
 
         try {
           return loggedUser(credentials);
         } catch (error: unknown) {
-          console.error("An error occurred while logging you in", error);
-          
+          console.error('An error occurred while logging you in', error);
+
           return null;
         }
-      }
-
-    })],
+      },
+    }),
+  ],
   secret: process.env.AUTH_SECRET,
   debug: true,
-  session: { strategy: "jwt", maxAge: 60 * 60, }
-
+  session: { strategy: 'jwt', maxAge: 60 * 60 },
 } satisfies NextAuthConfig;
