@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button"
 import { FcGoogle } from "react-icons/fc";
 import { signIn } from "next-auth/react"
 import { toast } from "react-toastify"
+
 import {
   Form,
   FormControl,
@@ -25,6 +26,10 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { BACKEND_API } from "@/lib/api"
+import { ApiError } from "@/lib/ApiError"
 
 const formSchema = z.object({
   email: z.string().min(2, {
@@ -45,6 +50,9 @@ type FormInputs = z.infer<typeof formSchema>
 
 export default function Register({ className }: React.ComponentProps<"div">) {
 
+  const router = useRouter();
+
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -60,13 +68,22 @@ export default function Register({ className }: React.ComponentProps<"div">) {
   const doSignup: SubmitHandler<FormInputs> = async (data) => {
 
     try {
-      await signIn("credentials", {
-        ...data,
-        redirectTo: "/",
-      });
+      const { data: response } = await BACKEND_API.post("/signup", data);
+
+      toast.success("Your account has created successfully!");
+
+      router.push("/signin");
 
     } catch (error: unknown) {
-      console.error("Signin error:", error);
+
+      if (typeof error === "object") {
+        const err = error as Error;
+
+        toast.error(err.message || "Sign-in failed. Please try again.");
+        setErrorMessage(err.message || "Sign-in failed. Please try again.");
+
+      }
+
       if (error instanceof Error) {
         toast.error(error.message || "Sign-in failed. Please try again.");
       }
@@ -80,8 +97,6 @@ export default function Register({ className }: React.ComponentProps<"div">) {
         redirectTo: "/",
       });
     } catch (error: unknown) {
-      console.log(error);
-
       toast.error("An error occurred during Google sign-in");
     }
   };
@@ -98,6 +113,11 @@ export default function Register({ className }: React.ComponentProps<"div">) {
           </CardDescription>
         </CardHeader>
         <CardContent>
+
+          {errorMessage && <div className="bg-red-600 text-white px-4 py-2 rounded my-4">
+            {errorMessage}
+          </div>}
+
           <Form {...form}>
             <form onSubmit={form.handleSubmit(doSignup)} className="space-y-4">
               <div className="flex flex-col gap-4 md:flex-row">

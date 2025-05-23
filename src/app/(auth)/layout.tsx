@@ -10,9 +10,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
     const router = useRouter();
 
     useEffect(() => {
-        if (!session) {
-            router.push("/signin");
-        } else {
+        if (session) {
             router.push("/")
         }
     }, [session, router]);

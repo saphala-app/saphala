@@ -24,9 +24,10 @@ export const authConfig = {
           const credentials = {
             user_name,
             email,
-            fullName: profile.name || undefined,
+            full_name: profile.name || undefined,
             provider: account.provider,
             password: generateRandomPassword(10),
+            avatar: profile.picture || undefined,
           };
 
           await findOrCreate(credentials);

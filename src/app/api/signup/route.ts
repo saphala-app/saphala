@@ -16,7 +16,7 @@ export async function POST(request: Request) {
         const { email, password, user_name, full_name } = body;
 
         if ([user_name, full_name, email, password].some((field: string) => field.trim() == "")) {
-            return NextResponse.json(new ApiError(400, "Invalid data"))
+            return NextResponse.json(new ApiError(400, "Invalid data"), { status: 400 })
         }
 
         const userExists = await User.findOne({
@@ -24,7 +24,7 @@ export async function POST(request: Request) {
         });
 
         if (userExists) {
-            return NextResponse.json(new ApiError(401, USER_EXISTS), { status: 401 })
+            return NextResponse.json(new ApiError(409, USER_EXISTS), { status: 409 })
         }
 
         const user = await User.create({
@@ -34,7 +34,16 @@ export async function POST(request: Request) {
             full_name,
         });
 
-        return NextResponse.json(new ApiResponse(user, "Account created!"));
+
+        const res = {
+            _id: user._id,
+            email: user.email,
+            username: user.username,
+            full_name: user.full_name,
+            avatar: user.avatar,
+        };
+
+        return NextResponse.json(new ApiResponse(res, "Account created!"));
     } catch (error: unknown) {
 
         if (error instanceof Error) {

@@ -52,11 +52,18 @@ export default function LoginForm({ className }: React.ComponentProps<"div">) {
   const doLogin: SubmitHandler<FormInputs> = async (data) => {
 
     try {
-      await signIn("credentials", {
+      const response = await signIn("credentials", {
         ...data,
+        redirect: false,
         redirectTo: "/",
       });
 
+      if (response.error === "CredentialsSignin") {
+        toast.error("Unable to logged in. Please check details.")
+
+        return false;
+      }
+      
     } catch (error: unknown) {
       console.error("Signin error:", error);
 
@@ -74,8 +81,7 @@ export default function LoginForm({ className }: React.ComponentProps<"div">) {
         redirectTo: "/",
       });
     } catch (error: unknown) {
-      console.log(error);
-      
+
       toast.error("An error occurred during Google sign-in");
     }
   };
@@ -90,9 +96,11 @@ export default function LoginForm({ className }: React.ComponentProps<"div">) {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(doLogin)}>
-              <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6">
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(doLogin)}
+                className="flex flex-col gap-6">
                 <FormField
                   control={form.control}
                   name="email"
@@ -141,31 +149,32 @@ export default function LoginForm({ className }: React.ComponentProps<"div">) {
                 <Button type="submit" className="w-full">
                   Login
                 </Button>
+              </form>
+            </Form>
 
-                <div className="relative">
-                  <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t"></span>
-                  </div>
-                  <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
-                  </div>
-                </div>
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t"></span>
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+              </div>
+            </div>
 
-                <Button onClick={handleGoogleSignIn} variant="outline" className="w-full flex items-center gap-4">
-                  <FcGoogle />
-                  Login with Google
-                </Button>
-              </div>
-              <div className="mt-4 text-center text-sm">
-                Don&apos;t have an account?{" "}
-                <Link href="/signup" className="underline underline-offset-4">
-                  Sign up
-                </Link>
-              </div>
-            </form>
-          </Form>
+            <Button onClick={handleGoogleSignIn} variant="outline" className="w-full flex items-center gap-4">
+              <FcGoogle />
+              Login with Google
+            </Button>
+
+            <div className="mt-4 text-center text-sm">
+              Don&apos;t have an account?{" "}
+              <Link href="/signup" className="underline underline-offset-4">
+                Sign up
+              </Link>
+            </div>
+          </div>
         </CardContent>
       </Card>
-    </div>
+    </div >
   )
 }
