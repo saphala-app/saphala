@@ -17,7 +17,7 @@ export async function POST(request: Request) {
         const { email, password } = body;
 
         if ([email, password].some((field: string) => field.trim() == "")) {
-            return NextResponse.json(new ApiError(400, "Invalid data"))
+            return NextResponse.json(new ApiError(400, "Invalid data"), { status: 400 })
         }
 
         const userExists = await User.findOne({
@@ -39,8 +39,11 @@ export async function POST(request: Request) {
         }
 
         return NextResponse.json(new ApiResponse(user, "Logged in successfully!"));
-    } catch (error: any) {
-        return NextResponse.json(new ApiError(500, "An Occurred while logging you in", error.message), { status: 500 })
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            return NextResponse.json(new ApiError(500, "An Occurred while logging you in", error.message), { status: 500 })
+        }
+        return NextResponse.json(new ApiError(500, "An Occurred while logging you in", error), { status: 500 })
     }
 
 }

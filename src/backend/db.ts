@@ -6,12 +6,10 @@ export const connectToDB = async () => {
 
   if (!MONGODB_URL) {
     throw new Error('Database url is missing!');
-    process.exit(1);
   }
 
   if (!DB_NAME) {
     throw new Error('Dataname is required!');
-    process.exit(1);
   }
 
   try {
@@ -22,6 +20,5 @@ export const connectToDB = async () => {
     }
   } catch (error) {
     console.log('MONGODB connection FAILED ', error);
-    process.exit(1);
   }
 };

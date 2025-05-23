@@ -32,13 +32,16 @@ export async function POST(request: Request) {
             password,
             username: user_name,
             full_name,
-        });      
+        });
 
         return NextResponse.json(new ApiResponse(user, "Account created!"));
-    } catch (error: any) {
-        console.log(error);
+    } catch (error: unknown) {
 
-        return NextResponse.json(new ApiError(500, "An Occurred while creating an account", error.message), { status: 500 })
+        if (error instanceof Error) {
+            return NextResponse.json(new ApiError(500, "An Occurred while creating an account", error.message), { status: 500 })
+        }
+
+        return NextResponse.json(new ApiError(500, "An Occurred while creating an account", error), { status: 500 })
     }
 
 }

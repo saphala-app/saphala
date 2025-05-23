@@ -1,8 +1,22 @@
-import mongoose, { model, Schema } from "mongoose";
+import mongoose, { Model, Schema } from "mongoose";
 import bcrypt from "bcrypt";
 
-const userSchema = new Schema(
+interface IUser {
+    full_name: string;
+    username: string;
+    email: string;
+    password: string;
+    bio: string;
+    avatar: string;
+}
+
+const userSchema = new Schema<IUser>(
     {
+        full_name: {
+            type: String,
+            required: [true, "Full Name is required!"],
+        },
+
         username: {
             type: String,
             unique: true,
@@ -11,11 +25,11 @@ const userSchema = new Schema(
         email: {
             type: String,
             unique: true,
-            required: [true, "User Name is required!"],
+            required: [true, "Email is required!"],
         },
         password: {
             type: String,
-            required: [true, "User Name is required!"],
+            required: [true, "Password is required!"],
         },
         bio: {
             type: String,
@@ -26,9 +40,12 @@ const userSchema = new Schema(
     },
     {
         timestamps: true
-    })
+    }
+);
 
-
+/**
+ * Hash password
+ */
 userSchema.pre("save", async function (next) {
     if (!this.isModified("password")) return next();
 
@@ -36,6 +53,9 @@ userSchema.pre("save", async function (next) {
     next()
 })
 
+/**
+ * Remove password
+ */
 userSchema.set('toJSON', {
     transform: (doc, ret) => {
         delete ret.password;
@@ -44,4 +64,4 @@ userSchema.set('toJSON', {
     },
 });
 
-export const User = mongoose.models.User || mongoose.model('User', userSchema);
+export const User = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
