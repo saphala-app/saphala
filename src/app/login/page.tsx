@@ -1,10 +1,10 @@
 'use client';
-import Signup from '@/components/ui/Signup';
+import Login from '@/components/ui/Login';
 
 export default function Home() {
   return (
     <div className="">
-      <Signup />
+      <Login />
     </div>
   );
 }
