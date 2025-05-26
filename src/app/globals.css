@@ -217,3 +217,66 @@
   }
 }
 
+/* Added For /movie/{movie} */
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #2d0000;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--color-red-netflix); /* Will be replaced by Tailwind color */
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #ff0000;
+}
+
+/* Custom glow effect */
+.glow-red:hover {
+    box-shadow: 0 0 10px rgba(229, 9, 20, 0.7);
+}
+.glow-red-focus:focus {
+    box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.4);
+}
+
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Advanced Post Styles */
+.post-card {
+    backdrop-filter: blur(8px);
+    background-color: rgba(26, 26, 26, 0.8);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(229, 9, 20, 0.5);
+}
+.vote-button {
+    color: #888;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+.vote-button:hover {
+    color: var(--color-light-red-accent); /* Will be replaced by Tailwind color */
+    transform: scale(1.1);
+}
+.vote-button.active {
+    color: var(--color-red-netflix); /* Will be replaced by Tailwind color */
+    transform: scale(1.1);
+}
+.comment-action, .share-action, .save-action {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 9999px;
+    background-color: rgba(50, 50, 50, 0.5);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.comment-action:hover, .share-action:hover, .save-action:hover {
+    background-color: var(--color-red-netflix); /* Will be replaced by Tailwind color */
+    color: white;
+}

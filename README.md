@@ -74,9 +74,18 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
     }
     ```
 - **Error Responses**:
+
   - **Code**: 400 - Invalid data
   - **Code**: 401 - Authentication failed
   - **Code**: 500 - Server error
+
+  ### /movie/[slug]
+
+  - the work is almost done but there is one issue and that is if the movies have same name, it is only showing with the most outdated movie of that name, so i dont know what to do there
+
+  #### Components Used
+
+  - you will find all the componenets use in this in the folder of src/components/ui/movie-ui, the componets of PostCard is usable even in other part of the website
 
 ## Technologies Used
 
