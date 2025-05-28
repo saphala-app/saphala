@@ -74,6 +74,9 @@
   --color-sidebar-border: var(--sidebar-border);
 
   --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-bricolage: 'Bricolage', sans-serif;
+  --font-bagel-fat-one: 'Bagel Fat One', cursive;
 }
 
 :root {

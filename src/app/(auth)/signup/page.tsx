@@ -1,21 +1,15 @@
-"use client"
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { SubmitHandler, useForm } from "react-hook-form"
-import { z } from "zod"
-import { cn } from "@/lib/utils"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { FcGoogle } from "react-icons/fc";
-import { signIn } from "next-auth/react"
-import { toast } from "react-toastify"
+import { zodResolver } from '@hookform/resolvers/zod';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { cn } from '@/lib/utils';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { FcGoogle } from 'react-icons/fc';
+import { signIn } from 'next-auth/react';
+import { toast } from 'react-toastify';
 
 import {
   Form,
@@ -24,32 +18,33 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
-import { BACKEND_API } from "@/lib/api"
-import { ApiError } from "@/lib/ApiError"
+} from '@/components/ui/form';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { BACKEND_API } from '@/lib/api';
 
 const formSchema = z.object({
-  email: z.string().min(2, {
-    message: "Email must be at least 2 characters.",
-  }).email(),
+  email: z
+    .string()
+    .min(2, {
+      message: 'Email must be at least 2 characters.',
+    })
+    .email(),
   password: z.string().min(2, {
-    message: "Password must be at least 2 characters.",
+    message: 'Password must be at least 2 characters.',
   }),
   full_name: z.string().min(2, {
-    message: "Full Name must be at least 2 characters.",
+    message: 'Full Name must be at least 2 characters.',
   }),
   user_name: z.string().min(2, {
-    message: "User Name must be at least 2 characters.",
+    message: 'User Name must be at least 2 characters.',
   }),
-})
+});
 
-type FormInputs = z.infer<typeof formSchema>
+type FormInputs = z.infer<typeof formSchema>;
 
-export default function Register({ className }: React.ComponentProps<"div">) {
-
+export default function Register({ className }: React.ComponentProps<'div'>) {
   const router = useRouter();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -57,66 +52,59 @@ export default function Register({ className }: React.ComponentProps<"div">) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
-      full_name: "",
-      user_name: "",
+      email: '',
+      password: '',
+      full_name: '',
+      user_name: '',
     },
-  })
+  });
 
-
-  const doSignup: SubmitHandler<FormInputs> = async (data) => {
-
+  const doSignup: SubmitHandler<FormInputs> = async data => {
     try {
-      const { data: response } = await BACKEND_API.post("/signup", data);
+      const { data: response } = await BACKEND_API.post('/signup', data);
+      console.log(response);
 
-      toast.success("Your account has created successfully!");
+      toast.success('Your account has created successfully!');
 
-      router.push("/signin");
-
+      router.push('/signin');
     } catch (error: unknown) {
-
-      if (typeof error === "object") {
+      if (typeof error === 'object') {
         const err = error as Error;
 
-        toast.error(err.message || "Sign-in failed. Please try again.");
-        setErrorMessage(err.message || "Sign-in failed. Please try again.");
-
+        toast.error(err.message || 'Sign-in failed. Please try again.');
+        setErrorMessage(err.message || 'Sign-in failed. Please try again.');
       }
 
       if (error instanceof Error) {
-        toast.error(error.message || "Sign-in failed. Please try again.");
+        toast.error(error.message || 'Sign-in failed. Please try again.');
       }
-    }
-  }
-
-
-  const handleGoogleSignIn = async () => {
-    try {
-      await signIn("google", {
-        redirectTo: "/",
-      });
-    } catch (error: unknown) {
-      toast.error("An error occurred during Google sign-in");
     }
   };
 
-
+  const handleGoogleSignIn = async () => {
+    try {
+      await signIn('google', {
+        redirectTo: '/',
+      });
+    } catch (error: unknown) {
+      console.error('Google signin error:', error);
+      toast.error('An error occurred during Google sign-in');
+    }
+  };
 
   return (
-    <div className={cn("flex flex-col gap-6 w-full max-w-lg", className)}>
+    <div className={cn('flex w-full max-w-lg flex-col gap-6', className)}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl text-center">Create an account</CardTitle>
+          <CardTitle className="text-center text-2xl">Create an account</CardTitle>
           <CardDescription className="text-center">
             Enter your email below to create your account
           </CardDescription>
         </CardHeader>
         <CardContent>
-
-          {errorMessage && <div className="bg-red-600 text-white px-4 py-2 rounded my-4">
-            {errorMessage}
-          </div>}
+          {errorMessage && (
+            <div className="my-4 rounded bg-red-600 px-4 py-2 text-white">{errorMessage}</div>
+          )}
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(doSignup)} className="space-y-4">
@@ -128,10 +116,7 @@ export default function Register({ className }: React.ComponentProps<"div">) {
                     <FormItem>
                       <FormLabel>Full Name</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Full Name"
-                          {...field}
-                        />
+                        <Input placeholder="Full Name" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -145,16 +130,12 @@ export default function Register({ className }: React.ComponentProps<"div">) {
                     <FormItem>
                       <FormLabel>User name</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="User name"
-                          {...field}
-                        />
+                        <Input placeholder="User name" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-
               </div>
               <FormField
                 control={form.control}
@@ -163,11 +144,7 @@ export default function Register({ className }: React.ComponentProps<"div">) {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="Email"
-                        {...field}
-                      />
+                      <Input type="email" placeholder="Email" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -180,11 +157,7 @@ export default function Register({ className }: React.ComponentProps<"div">) {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="Password"
-                        {...field}
-                      />
+                      <Input type="password" placeholder="Password" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -200,16 +173,20 @@ export default function Register({ className }: React.ComponentProps<"div">) {
                   <span className="w-full border-t"></span>
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+                  <span className="bg-background text-muted-foreground px-2">Or continue with</span>
                 </div>
               </div>
 
-              <Button onClick={handleGoogleSignIn} variant="outline" className="w-full flex items-center gap-4">
+              <Button
+                onClick={handleGoogleSignIn}
+                variant="outline"
+                className="flex w-full items-center gap-4"
+              >
                 <FcGoogle />
                 Login with Google
               </Button>
               <div className="mt-4 text-center text-sm">
-                Already have an account?{" "}
+                Already have an account?{' '}
                 <Link href="/signin" className="underline underline-offset-4">
                   Sign in
                 </Link>
@@ -219,5 +196,5 @@ export default function Register({ className }: React.ComponentProps<"div">) {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
