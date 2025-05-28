@@ -19,9 +19,11 @@ Thank you for your interest in contributing! We welcome all contributions to mak
 ## Getting Started
 
 1. **Clone** the repository:
-  ```sh
-  git clone https://github.com/saphala-app/saphala.git
-  ```
+
+```sh
+git clone https://github.com/saphala-app/saphala.git
+```
+
 2. **Install dependencies** as described in the `README.md`.
 
 ## How to Contribute
@@ -41,9 +43,11 @@ Thank you for your interest in contributing! We welcome all contributions to mak
 ## Pull Request Process
 
 1. Create a new branch from `main`:
-  ```sh
-  git checkout -b feature/your-feature-name
-  ```
+
+```sh
+git checkout -b feature/your-feature-name
+```
+
 2. Make your changes.
 3. Ensure all tests pass.
 4. Commit your changes (see [Commit Message Guidelines](#commit-message-guidelines)).
