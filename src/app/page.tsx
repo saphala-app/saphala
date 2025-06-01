@@ -1,6 +1,7 @@
 import FAQ from '@/components/common/faq';
+import LoginButton from '@/components/common/login-button';
 import { faqItems } from '@/constants/home';
-import { BatteryFullIcon, LogInIcon, WifiIcon } from 'lucide-react';
+import { BatteryFullIcon, WifiIcon } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -37,10 +38,7 @@ export default function Home() {
           <h1 className="text-blue-600">Your friends</h1>
         </div>
         <p>The best way to hang out on your phone.</p>
-        <button className="mx-auto flex w-52 cursor-pointer items-center justify-center gap-3 rounded-3xl bg-neutral-900 py-3 text-xs font-bold text-white">
-          <LogInIcon size={20} />
-          Login to Saphala
-        </button>
+        <LoginButton />
       </div>
 
       <div className="mx-auto mt-20 grid auto-rows-[10rem] grid-cols-1 gap-4 px-4 sm:grid-cols-6">

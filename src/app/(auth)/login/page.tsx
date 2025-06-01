@@ -2,49 +2,29 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { cn } from '@/lib/utils';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
 import { FcGoogle } from 'react-icons/fc';
 import { signIn } from 'next-auth/react';
 import { toast } from 'react-toastify';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { Form } from '@/components/ui/form';
 import Link from 'next/link';
-
-const formSchema = z.object({
-  email: z
-    .string()
-    .min(2, {
-      message: 'Email must be at least 2 characters.',
-    })
-    .email(),
-  password: z.string().min(2, {
-    message: 'Password must be at least 2 characters.',
-  }),
-});
-
-type FormInputs = z.infer<typeof formSchema>;
+import { LoginInputs, loginSchema } from '@/lib/validation';
+import FormInput from '@/components/common/form-input';
+import { PasswordField } from '@/components/common/password-input';
+import { Spinner } from '@/components/common/spinner';
 
 export default function LoginForm({ className }: React.ComponentProps<'div'>) {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<LoginInputs>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
       password: '',
     },
   });
 
-  const doLogin: SubmitHandler<FormInputs> = async data => {
+  const doLogin: SubmitHandler<LoginInputs> = async data => {
     try {
       const response = await signIn('credentials', {
         ...data,
@@ -53,7 +33,7 @@ export default function LoginForm({ className }: React.ComponentProps<'div'>) {
       });
 
       if (response.error === 'CredentialsSignin') {
-        toast.error('Unable to logged in. Please check details.');
+        toast.error('Unable to log in. Please check details.');
 
         return false;
       }
@@ -86,49 +66,37 @@ export default function LoginForm({ className }: React.ComponentProps<'div'>) {
             Enter your email below to login to your account
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="mt-8">
           <div className="flex flex-col gap-6">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(doLogin)} className="flex flex-col gap-6">
-                <FormField
-                  control={form.control}
+                <FormInput
                   name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input type="email" placeholder="Email" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                  label="Email"
+                  type="text"
+                  placeholder="john@doe.com"
+                  isAsterisk
                 />
-                <div className="grid gap-2">
-                  <div className="flex items-center">
-                    <Label htmlFor="password">Password</Label>
-                    <a
-                      href="#"
-                      className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                    >
-                      Forgot your password?
-                    </a>
-                  </div>
-
-                  <FormField
-                    control={form.control}
+                <div>
+                  <PasswordField
                     name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Input type="password" placeholder="Password" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                    label="Password"
+                    placeholder="********"
+                    isAsterisk
                   />
+                  <Link
+                    href="/forgot-password"
+                    className="mt-1 flex justify-end text-xs font-medium underline decoration-dashed underline-offset-4"
+                  >
+                    Forgot Password?
+                  </Link>
                 </div>
-                <Button type="submit" className="w-full">
-                  Login
+                <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+                  {form.formState.isSubmitting ? (
+                    <Spinner className="size-4 text-white" />
+                  ) : (
+                    'Login'
+                  )}
                 </Button>
               </form>
             </Form>
@@ -153,7 +121,10 @@ export default function LoginForm({ className }: React.ComponentProps<'div'>) {
 
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{' '}
-              <Link href="/signup" className="underline underline-offset-4">
+              <Link
+                href="/signup"
+                className="underline decoration-dashed underline-offset-4 transition-colors hover:text-blue-600"
+              >
                 Sign up
               </Link>
             </div>

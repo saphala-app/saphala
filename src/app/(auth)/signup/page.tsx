@@ -2,55 +2,29 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { cn } from '@/lib/utils';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { FcGoogle } from 'react-icons/fc';
 import { signIn } from 'next-auth/react';
 import { toast } from 'react-toastify';
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { Form } from '@/components/ui/form';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { BACKEND_API } from '@/lib/api';
-
-const formSchema = z.object({
-  email: z
-    .string()
-    .min(2, {
-      message: 'Email must be at least 2 characters.',
-    })
-    .email(),
-  password: z.string().min(2, {
-    message: 'Password must be at least 2 characters.',
-  }),
-  full_name: z.string().min(2, {
-    message: 'Full Name must be at least 2 characters.',
-  }),
-  user_name: z.string().min(2, {
-    message: 'User Name must be at least 2 characters.',
-  }),
-});
-
-type FormInputs = z.infer<typeof formSchema>;
+import { SignupInputs, signupSchema } from '@/lib/validation';
+import FormInput from '@/components/common/form-input';
+import { PasswordField } from '@/components/common/password-input';
 
 export default function Register({ className }: React.ComponentProps<'div'>) {
   const router = useRouter();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<SignupInputs>({
+    resolver: zodResolver(signupSchema),
     defaultValues: {
       email: '',
       password: '',
@@ -59,14 +33,14 @@ export default function Register({ className }: React.ComponentProps<'div'>) {
     },
   });
 
-  const doSignup: SubmitHandler<FormInputs> = async data => {
+  const handleSignup: SubmitHandler<SignupInputs> = async data => {
     try {
       const { data: response } = await BACKEND_API.post('/signup', data);
       console.log(response);
 
       toast.success('Your account has created successfully!');
 
-      router.push('/signin');
+      router.push('/');
     } catch (error: unknown) {
       if (typeof error === 'object') {
         const err = error as Error;
@@ -101,68 +75,22 @@ export default function Register({ className }: React.ComponentProps<'div'>) {
             Enter your email below to create your account
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          {errorMessage && (
-            <div className="my-4 rounded bg-red-600 px-4 py-2 text-white">{errorMessage}</div>
-          )}
-
+        <CardContent className="mt-8">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(doSignup)} className="space-y-4">
+            <form onSubmit={form.handleSubmit(handleSignup)} className="space-y-4">
               <div className="flex flex-col gap-4 md:flex-row">
-                <FormField
-                  control={form.control}
-                  name="full_name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Full Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Full Name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <FormInput name="full_name" label="Full Name" placeholder="John Doe" isAsterisk />
 
-                <FormField
-                  control={form.control}
-                  name="user_name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>User name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="User name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <FormInput name="user_name" label="User Name" placeholder="john" isAsterisk />
               </div>
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input type="email" placeholder="Email" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" placeholder="Password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <FormInput name="email" label="Email" placeholder="john@doe.com" isAsterisk />
+              <PasswordField name="password" label="Password" placeholder="Password" isAsterisk />
+
+              {errorMessage && (
+                <div className="my-4 rounded-lg border border-red-200 bg-gradient-to-r from-red-50 to-red-100 px-4 py-4 text-sm text-red-700 shadow-sm">
+                  {errorMessage}
+                </div>
+              )}
 
               <Button type="submit" className="w-full">
                 Register
@@ -180,14 +108,17 @@ export default function Register({ className }: React.ComponentProps<'div'>) {
               <Button
                 onClick={handleGoogleSignIn}
                 variant="outline"
-                className="flex w-full items-center gap-4"
+                className="flex w-full items-center gap-4 py-5"
               >
                 <FcGoogle />
                 Login with Google
               </Button>
-              <div className="mt-4 text-center text-sm">
+              <div className="mt-4 text-center text-sm text-neutral-600">
                 Already have an account?{' '}
-                <Link href="/signin" className="underline underline-offset-4">
+                <Link
+                  href="/signin"
+                  className="underline decoration-dashed underline-offset-4 transition-colors hover:text-blue-600"
+                >
                   Sign in
                 </Link>
               </div>
