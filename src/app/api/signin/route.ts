@@ -1,5 +1,5 @@
-import { connectToDB } from '@/backend/db';
-import { User } from '@/backend/models/user';
+import { connectToDB } from '@/backend/utils/db';
+import { User } from '@/backend/models/user.model';
 import { ApiError } from '@/lib/ApiError';
 import { ApiResponse } from '@/lib/ApiResponse';
 import { AUTH_FAILED, AUTH_PASS_FAIL } from '@/lib/constants';

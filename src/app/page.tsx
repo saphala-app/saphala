@@ -1,7 +1,9 @@
+import AuthButtons from '@/components/common/auth-buttons';
 import FAQ from '@/components/common/faq';
-import LoginButton from '@/components/common/login-button';
+// import LoginButton from '@/components/common/login-button';
 import { faqItems } from '@/constants/home';
 import { BatteryFullIcon, WifiIcon } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Home() {
   return (
@@ -17,14 +19,14 @@ export default function Home() {
                 <BatteryFullIcon fill="#000" className="size-5" />
               </div>
             </div>
-            <img src="/home/screen.jpg" alt="Description" className="h-[30rem]" />
+            <Image src="/home/screen.jpg" alt="Description" className="h-[30rem]" />
           </div>
-          <img
+          <Image
             src="/home/cloud_right.svg"
             alt=""
             className="absolute -bottom-12 left-1/4 w-[30rem] rotate-3"
           />
-          <img
+          <Image
             src="/home/cloud_left.svg"
             alt=""
             className="absolute right-1/4 -bottom-8 w-[30rem] -rotate-3"
@@ -38,7 +40,7 @@ export default function Home() {
           <h1 className="text-blue-600">Your friends</h1>
         </div>
         <p>The best way to hang out on your phone.</p>
-        <LoginButton />
+        <AuthButtons />
       </div>
 
       <div className="mx-auto mt-20 grid auto-rows-[10rem] grid-cols-1 gap-4 px-4 sm:grid-cols-6">
@@ -93,7 +95,7 @@ export default function Home() {
       <div className="mx-auto mt-40 w-fit">
         <div className="relative">
           <h1 className="font-bagel-fat-one text-5xl text-neutral-800">Available Magnets</h1>
-          <img src="/home/cloud_right.svg" alt="" className="absolute -bottom-20 -z-10" />
+          <Image src="/home/cloud_right.svg" alt="" className="absolute -bottom-20 -z-10" />
         </div>
       </div>
 
