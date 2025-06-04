@@ -8,6 +8,7 @@ interface IUser {
   password: string;
   bio: string;
   avatar: string;
+  provider: string;
 }
 
 const userSchema = new Schema<IUser>(
@@ -35,6 +36,9 @@ const userSchema = new Schema<IUser>(
       type: String,
     },
     avatar: {
+      type: String,
+    },
+    provider: {
       type: String,
     },
   },

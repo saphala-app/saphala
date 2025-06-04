@@ -1,5 +1,5 @@
-import { connectToDB } from '@/backend/db';
-import { User } from '@/backend/models/user';
+import { connectToDB } from '@/backend/utils/db';
+import { User } from '@/backend/models/user.model';
 import { SignInType, SignUpType } from '@/types';
 import bcrypt from 'bcrypt';
 
@@ -52,6 +52,11 @@ export const loggedUser = async (credentials: SignInType) => {
 };
 
 export const findOrCreate = async (credentials: SignUpType) => {
+  if (credentials.isOAuthUser) {
+    // Don't set password for OAuth users
+    delete credentials.password;
+  }
+
   const userExists = await User.findOne({
     email: credentials.email,
   });
@@ -63,8 +68,8 @@ export const findOrCreate = async (credentials: SignUpType) => {
   const user = await User.create({
     email: credentials.email,
     password: credentials.password,
-    username: credentials.user_name,
-    full_name: credentials.fullName,
+    username: credentials.username,
+    full_name: credentials.full_name,
   });
 
   return user;
