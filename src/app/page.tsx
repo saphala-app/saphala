@@ -30,14 +30,14 @@ export default function Home() {
             src="/home/cloud_right.svg"
             alt=""
             className="absolute -bottom-12 left-1/4 w-[30rem] rotate-3"
-            width={100}
+            width={200}
             height={100}
           />
           <Image
             src="/home/cloud_left.svg"
             alt=""
             className="absolute right-1/4 -bottom-8 w-[30rem] -rotate-3"
-            width={100}
+            width={200}
             height={100}
           />
         </div>
