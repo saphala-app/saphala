@@ -126,7 +126,7 @@ export const authConfig = {
         session.user.image = token.picture || '';
 
         // Add custom fields
-        session.provider = token.provider || undefined;
+        // session.provider = token.provider || undefined;
       }
       return session;
     },
