@@ -44,7 +44,7 @@ export default function Home() {
       </div>
 
       <div className="mx-auto mt-8 w-fit space-y-8 text-center">
-        <div className="font-bagel-fat-one space-y-8 text-center text-5xl sm:text-8xl">
+        <div className="font-cabinet space-y-8 text-center text-5xl font-black sm:text-8xl">
           <h1 className="">Your space</h1>
           <h1 className="text-blue-600">Your friends</h1>
         </div>
@@ -64,7 +64,7 @@ export default function Home() {
         <div className="grid grid-cols-1 items-center gap-4 text-center sm:grid-cols-2 sm:text-left">
           <div className="mx-auto size-[20rem] rounded-3xl bg-green-500 sm:mx-0"></div>
           <div>
-            <h1 className="font-bagel-fat-one mb-2 text-4xl text-green-500">
+            <h1 className="font-cabinet mb-2 text-3xl font-black text-green-500">
               A new way to hangout
             </h1>
             <p className="text-sm text-neutral-500">
@@ -76,7 +76,7 @@ export default function Home() {
 
         <div className="grid grid-cols-1 items-center gap-4 text-center sm:grid-cols-2 sm:text-left">
           <div>
-            <h1 className="font-bagel-fat-one mb-2 text-4xl text-yellow-500">
+            <h1 className="font-cabinet mb-2 text-3xl font-black text-yellow-500">
               Your Home Screen, Now With Friends
             </h1>
             <p className="text-sm text-neutral-500">
@@ -90,7 +90,7 @@ export default function Home() {
         <div className="grid grid-cols-1 items-center gap-4 text-center sm:grid-cols-2 sm:text-left">
           <div className="mx-auto size-[20rem] rounded-3xl bg-red-600 sm:mx-0"></div>
           <div>
-            <h1 className="font-bagel-fat-one mb-2 text-4xl text-red-600">
+            <h1 className="font-cabinet mb-2 text-3xl font-black text-red-600">
               Personalize your space
             </h1>
             <p className="text-sm text-neutral-500">
@@ -103,7 +103,7 @@ export default function Home() {
 
       <div className="mx-auto mt-40 w-fit">
         <div className="relative">
-          <h1 className="font-bagel-fat-one px-10 py-28 text-5xl text-neutral-800">
+          <h1 className="font-cabinet px-10 py-28 text-5xl font-black text-neutral-800">
             Available Magnets
           </h1>
           <Image src="/home/cloud_right.svg" alt="" className="absolute -z-10" fill />
@@ -111,7 +111,9 @@ export default function Home() {
       </div>
 
       <div className="my-40 grid grid-cols-1 gap-8 sm:grid-cols-2">
-        <h1 className="font-bagel-fat-one text-5xl text-neutral-800">Frequently asked questions</h1>
+        <h1 className="font-cabinet text-5xl font-black text-neutral-800">
+          Frequently asked questions
+        </h1>
         <FAQ items={faqItems} />
       </div>
     </main>

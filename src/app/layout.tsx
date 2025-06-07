@@ -1,31 +1,11 @@
 import type { Metadata } from 'next';
-import { Poppins, Bricolage_Grotesque, Bagel_Fat_One } from 'next/font/google';
 import { ThemeProvider } from '@/providers/theme-provider';
 import { SessionProvider } from 'next-auth/react';
 
 import './globals.css';
 import { ToastContainer } from 'react-toastify';
 import Footer from '@/components/common/footer';
-
-const bricolage = Bricolage_Grotesque({
-  subsets: ['latin'],
-  display: 'swap',
-  weight: 'variable',
-  variable: '--font-bricolage',
-});
-
-const bagelFatOne = Bagel_Fat_One({
-  subsets: ['latin'],
-  display: 'swap',
-  weight: '400',
-  variable: '--font-bagel-fat-one',
-});
-
-const poppins = Poppins({
-  variable: '--font-Poppins',
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
-});
+import { poppins } from '@/lib/fonts';
 
 export const metadata: Metadata = {
   title: 'Saphala',
@@ -39,9 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${poppins.className} ${bricolage.variable} ${bagelFatOne.variable} antialiased`}
-      >
+      <body className={`${poppins.className} antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
