@@ -37,7 +37,7 @@ export default function Footer() {
             </Link>
           </div>
         </div>
-        <h1 className="font-bagel-fat-one text-center text-[4rem] text-white/10 sm:text-[10rem] md:text-[13rem]">
+        <h1 className="font-cabinet text-center text-[4rem] font-black text-white/10 sm:text-[10rem] md:text-[13rem]">
           Saphala
         </h1>
       </div>
