@@ -1,0 +1,107 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+## SEO Optimization Rules
+
+### Metadata & Head Management
+- Always use Next.js `Metadata` API for static metadata and `generateMetadata` for dynamic metadata
+- Include essential meta tags: title, description, canonical URL, Open Graph, Twitter Cards
+- Ensure title tags are 50-60 characters, descriptions 150-160 characters
+- Use structured data (JSON-LD) where appropriate
+- Implement proper canonical URLs to avoid duplicate content
+- Add appropriate `robots` meta tags and generate sitemap.xml
+
+### Performance & Core Web Vitals
+- Prioritize Next.js Image component with proper `alt`, `width`, `height`, and `sizes` attributes
+- Use `loading="lazy"` for images below the fold
+- Implement proper preloading for critical resources
+- Suggest `next/dynamic` for code splitting and lazy loading
+- Optimize bundle size and eliminate unused code
+- Use Next.js built-in performance optimizations (automatic static optimization, etc.)
+
+### URL Structure & Navigation
+- Use semantic, SEO-friendly URLs with proper slugs
+- Implement breadcrumb navigation with structured data
+- Ensure proper internal linking structure
+- Use Next.js `Link` component for client-side navigation
+- Implement proper 301/302 redirects in next.config.js
+
+## Web Accessibility (WCAG 2.1 AA) Rules
+
+### Semantic HTML
+- Always use semantic HTML5 elements (`<main>`, `<nav>`, `<header>`, `<footer>`, `<article>`, `<section>`)
+- Proper heading hierarchy (h1 → h2 → h3, no skipping levels)
+- Use lists (`<ul>`, `<ol>`) for grouped content
+- Use `<button>` for actions, `<a>` for navigation
+
+### ARIA & Screen Reader Support
+- Add ARIA labels, descriptions, and landmarks where needed
+- Implement `aria-expanded`, `aria-current`, `aria-hidden` appropriately
+- Use `role` attributes when semantic HTML isn't sufficient
+- Ensure all interactive elements are focusable and have accessible names
+- Implement skip links for keyboard navigation
+
+### Color & Contrast
+- Ensure minimum 4.5:1 contrast ratio for normal text, 3:1 for large text
+- Don't rely solely on color to convey information
+- Provide text alternatives for color-coded content
+
+### Keyboard Navigation
+- Ensure all interactive elements are keyboard accessible
+- Implement visible focus indicators
+- Proper tab order and focus management
+- Support escape key for modal/dropdown dismissal
+- Implement arrow key navigation for complex widgets
+
+### Images & Media
+- Always include descriptive `alt` text for images
+- Use empty `alt=""` for decorative images
+- Provide captions and transcripts for video content
+- Implement `prefers-reduced-motion` for animations
+- Use `aria-label` or `aria-labelledby` for complex images/charts
+
+## Code Style & Patterns
+
+### Form Patterns
+- Use [form-input.tsx](mdc:src/components/common/form-input.tsx), [password-input.tsx](mdc:src/components/common/password-input.tsx), etc for form elements.
+- See [Login.tsx](mdc:src/components/ui/Login.tsx) and [Signup.tsx](mdc:src/components/ui/Signup.tsx) for reference
+- Implement proper error handling and validation messages
+- Use `aria-describedby` for help text and errors
+- Ensure forms are submittable via keyboard
+
+### Next.js Specific Patterns
+- Use the contents of [seo.tsx](mdc:src/components/common/seo.tsx) file
+- Implement proper error boundaries and 404 pages
+- Use `getStaticProps`/`getServerSideProps` for SEO-critical data
+- Implement proper loading states and error handling
+
+## Testing & Validation
+
+### Manual Testing Checklist
+- Test with screen readers (NVDA, JAWS, VoiceOver)
+- Keyboard-only navigation testing
+- Color blindness simulation
+- Mobile responsiveness and touch targets (minimum 44x44px)
+- Page load performance and Core Web Vitals
+
+## Common Anti-patterns to Avoid
+- Don't use `div` or `span` for interactive elements
+- Don't use `onClick` on non-interactive elements without proper ARIA
+- Avoid auto-playing media with sound
+- Don't use `target="_blank"` without `rel="noopener noreferrer"`
+- Avoid CSS-only dropdown menus without keyboard support
+- Don't implement infinite scroll without proper focus management
+
+## Dependencies to Consider
+- framer-motion with `prefers-reduced-motion` support
+
+## File Organization
+- Co-locate accessibility tests with components
+- Use meaningful file names and component names
+- Implement proper TypeScript interfaces for props
+- Create reusable accessible component patterns
+- Document accessibility decisions in code comments
+
+Remember: Every suggestion should consider both SEO impact and accessibility implications. When in doubt, prioritize user experience and inclusive design.
