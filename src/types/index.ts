@@ -1,13 +1,5 @@
-export type SignInType = {
-  email: string;
-  password?: string;
-};
+// Barrel file
 
-export type SignUpType = {
-  email: string;
-  username: string;
-  password?: string;
-  full_name?: string;
-  avatar?: string;
-  isOAuthUser?: boolean;
-};
+export * from './user';
+export * from './next-auth';
+export * from './seo';

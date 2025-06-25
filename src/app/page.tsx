@@ -1,8 +1,16 @@
 import AuthButtons from '@/components/common/auth-buttons';
 import FAQ from '@/components/common/faq';
+import { generateSEOMetadata } from '@/components/common/seo';
 import { faqItems } from '@/constants/home';
 import { BatteryFullIcon, WifiIcon } from 'lucide-react';
+import { Metadata } from 'next';
 import Image from 'next/image';
+
+export const metadata: Metadata = generateSEOMetadata({
+  title: 'Home',
+  description: 'Welcome to our website. We provide amazing services and products.',
+  canonical: 'https://saphala.com',
+});
 
 export default function Home() {
   return (

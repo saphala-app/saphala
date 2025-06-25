@@ -1,0 +1,66 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Directory Structure and Key Files
+
+This rule provides an overview of the main directories and files in the project, describing their purpose and typical contents. Use this as a reference for navigation and for placing new files.
+
+## Top-Level Structure
+
+```
+PROJECT_ROOT/
+├── .cursor/           # Cursor configuration and rules
+│   └── rules/         # Custom Cursor rules (.mdc files)
+├── public/            # Static assets (images, SVGs, etc.)
+├── src/               # Main source code
+├── node_modules/      # Installed dependencies
+├── package.json       # Project metadata and dependencies
+├── tsconfig.json      # TypeScript configuration
+├── next.config.ts     # Next.js configuration
+├── README.md          # Project documentation
+└── ...                # Other config and meta files
+```
+
+## Key Folders and Their Purpose
+
+- `.cursor/rules/` — Contains Cursor rule files (`.mdc`) for codebase guidance.
+- `public/` — Static files served at the root URL. Includes images, SVGs, and subfolders like `home/` for homepage assets.
+- `src/` — Main application source code:
+  - `app/` — Next.js app directory (routes, layouts, API endpoints):
+    - `(auth)/` — Authentication-related pages (login, signup)
+    - `(protected)/` — Protected routes (e.g., dashboard)
+    - `movie/` — Movie-related pages, including dynamic routes
+    - `api/` — API route handlers (auth, signup, signin, users)
+    - `globals.css` — Global styles
+    - `layout.tsx` — Root layout
+    - `page.tsx` — Root page
+  - `components/` — Reusable React components:
+    - `common/` — Shared UI elements (buttons, tooltips, SEO, etc.)
+    - `ui/` — Form and layout components, plus `movie-ui/` for movie-specific UI
+  - `lib/` — Utility functions, API helpers, validation, etc.
+  - `backend/` — Server-side models and utilities (e.g., database connection, user model)
+  - `config/` — Configuration files (auth, environment)
+  - `constants/` — Static constants (e.g., for home page)
+  - `fonts/` — Custom font files
+  - `providers/` — React context providers (e.g., theme)
+  - `types/` — TypeScript type definitions
+
+## Notable Files
+
+- `package.json` — Project dependencies and scripts
+- `tsconfig.json` — TypeScript project settings
+- `next.config.ts` — Next.js configuration
+- `README.md` — Project overview and instructions
+
+## Guidelines
+
+- Place new static assets in `public/` or its subfolders.
+- Add new pages or API routes under `src/app/`.
+- Add new reusable components to `src/components/`.
+- Place utility functions in `src/lib/`.
+- Add new Cursor rules to `.cursor/rules/` following the naming conventions.
+
+Refer to this rule when navigating the project or deciding where to add new files.
+

@@ -1,0 +1,56 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Tech Stack and Major Dependencies
+
+This rule provides an overview of the main technologies and libraries used in the project, grouped by their purpose. Refer to this when developing, debugging, or onboarding new contributors.
+
+## Frameworks & Core Libraries
+- **Next.js** (`next`): React-based framework for server-side rendering, routing, and full-stack capabilities.
+- **React** (`react`, `react-dom`): Core UI library for building components and interfaces.
+
+## Styling & UI
+- **Tailwind CSS** (`tailwindcss`, `prettier-plugin-tailwindcss`): Utility-first CSS framework for rapid UI development.
+- **@radix-ui/react-label, @radix-ui/react-slot, @radix-ui/react-tooltip**: Accessible, composable UI primitives.
+- **lucide-react**: Icon library for React.
+- **react-icons**: Popular icon packs for React.
+- **next-themes**: Theme switching (e.g., dark/light mode).
+- **tw-animate-css**: Animation utilities for Tailwind CSS.
+- **clsx**: Utility for conditionally joining classNames.
+- **class-variance-authority**: Utility for managing className variants.
+
+## Forms & Validation
+- **react-hook-form**: Performant, flexible form state management.
+- **@hookform/resolvers**: Integrates external validation libraries with react-hook-form.
+- **zod**: TypeScript-first schema validation.
+
+## Authentication & Security
+- **next-auth**: Authentication for Next.js apps (social, email, credentials, etc.).
+- **bcrypt**: Password hashing for secure authentication.
+
+## Backend & Data
+- **mongoose**: MongoDB object modeling for Node.js.
+- **cloudinary**: Cloud-based image and video management.
+- **axios**: Promise-based HTTP client for API requests.
+
+## Utilities
+- **react-toastify**: Toast notifications for React.
+- **motion**: Animation library for React.
+
+## Development & Tooling
+- **TypeScript**: Static type checking for JavaScript.
+- **ESLint** (`eslint`, `eslint-config-next`, `@eslint/eslintrc`): Linting and code quality.
+- **Prettier**: Code formatting.
+- **husky**: Git hooks for enforcing code quality.
+- **lint-staged**: Run linters on staged git files.
+- **@types/* packages**: TypeScript type definitions for dependencies.
+
+## Guidelines
+- Use the libraries above according to their intended purpose.
+- Prefer existing utilities and components before adding new dependencies.
+- Keep dependencies up to date and remove unused packages.
+
+Refer to this rule for a high-level understanding of the tech stack and when making decisions about adding or updating dependencies.
+
