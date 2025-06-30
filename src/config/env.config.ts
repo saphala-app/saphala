@@ -54,15 +54,14 @@ const parseEnv = () => {
   try {
     return envSchema.parse(process.env);
   } catch (error) {
-    // if (error instanceof z.ZodError) {
-    //   console.error('❌ Invalid environment variables:')
-    //   error.errors.forEach((err) => {
-    //     console.error(`  ${err.path.join('.')}: ${err.message}`)
-    //   })
-    //   process.exit(1)
-    // }
-    // throw error
-    console.log('Env config error', error);
+    if (error instanceof z.ZodError) {
+      console.error('❌ Invalid environment variables:');
+      error.errors.forEach(err => {
+        console.error(`  ${err.path.join('.')}: ${err.message}`);
+      });
+      // process.exit(1);
+    }
+    throw error;
   }
 };
 
